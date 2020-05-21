@@ -100,16 +100,6 @@ public class Utilities extends Component {
     }
 
     /**
-     * Get a File with the path to the file
-     * @param path path/to/file
-     * @return File at end of path
-     */
-    public static File getFileWithString(String path){
-        File selectedFile = new File("path");
-        return selectedFile;
-    }
-
-    /**
      * Recursively list all file in a directory, in a directory ad infinitum
      * @param files starting directory for the recursion
      */

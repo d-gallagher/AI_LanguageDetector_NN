@@ -5,10 +5,12 @@ import org.encog.engine.network.activation.ActivationElliottSymmetric;
 import org.encog.engine.network.activation.ActivationFunction;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Runner {
-	public static void main(String[] args){
+	public static void main(String[] args) throws InterruptedException {
 		/*
 			Each of the languages in the enum Language can be represented as a number between 0 and 234. You can 
 			map the output of the neural network and the training data label to / from the language using the
@@ -38,13 +40,13 @@ public class Runner {
 //		System.out.println("Total Run Time: " + totalTime + " ms");
 //		System.out.println("Building Vector Complete..");
 
-		NN nn = new NN();
-		ActivationFunction a = new ActivationElliottSymmetric();
-		File file = new File("data200.csv");
-//		File nnFile = new File("test.nn");
-//		nn.trainNewNetwork(a, 200, file);
-//		nn.trainNewNetwork(a, file);
-		Encog.getInstance().shutdown();
+//		NN nn = new NN();
+//		Map<String, double[]> map = new HashMap<>();
+//double [] array = new double[123];
+//		map.put("filename", array);
+
+		Menu menu = new Menu();
+		menu.doMenu();
 	}
 
 

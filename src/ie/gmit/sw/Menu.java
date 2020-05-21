@@ -6,7 +6,10 @@ import org.encog.engine.network.activation.*;
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class Menu extends Component {
     private Scanner s = new Scanner(System.in);
@@ -14,28 +17,48 @@ public class Menu extends Component {
     private ActivationFunction activationFunction = new ActivationElliottSymmetric();
     private int ngram = 2;
     private int vector = 500;
-    private ArrayList<double []> liveTestDataDir = new ArrayList<>();
+    private Map<String, double[]> liveTestDataDir = new HashMap<>();
     private double [] liveTestDatafile;
+    private String filepath = "./data" + vector + ".csv";
 
-    public void doMenu(){
+    public void doMenu() throws InterruptedException {
         while (running){
             String in;
+            int option;
             printOptions();
-            try {
-                int option = Integer.parseInt(s.next());
+            do{
+                System.out.println("Only numeric values accepted..");
+                in = s.next().toLowerCase();
+            }while (in.isEmpty() || !in.matches("[1-9]"));
+                option = Integer.parseInt(in);
                 switch (option){
                     case 1:
                         getUserInputNgram();        // reset default ngram size
                         getUserInputVector();       // reset default vector size
                         getUserInputActFunction();  // reset default activation function
+                        printNetworkPreferences();
+                        do{
+                            System.out.println("Return to main Menu..? -> y/n");
+                            in = s.next().toLowerCase();
+                        }while (in.isEmpty() || !in.matches("[y]"));
                         break;
                     case 2: // Build and run (train test evaluate), and save neural network.
+                        System.out.println("Building csv from Wili.txt file");
                         VectorProcessor defaultVP = new VectorProcessor(ngram, vector);
                         defaultVP.go();
-//                        File f = new File("data" + vector + ".csv");
+                        // Sleep for a few seconds while the file generates.
+                        TimeUnit.SECONDS.sleep(2);
+                        System.out.println("Building Neural Network with:");
+                        printNetworkPreferences();
+                        String csvFile = "data"+vector+".csv";
+                        System.out.println("Using csv: "+csvFile);
                         NN defaultNetwork = new NN();
-                        defaultNetwork.trainNewNetwork(activationFunction, vector, "data" + vector + ".csv");
+                        defaultNetwork.trainNewNetwork(activationFunction, vector, csvFile);
                         Encog.getInstance().shutdown();
+                        do{
+                            System.out.println("Return to main Menu..? -> y/n");
+                            in = s.next().toLowerCase();
+                        }while (in.isEmpty() || !in.matches("[y]"));
                         break;
                     case 3:
                             do{
@@ -51,9 +74,13 @@ public class Menu extends Component {
                             userVP.go();
                             liveTestDatafile = userVP.getLiveData();
                             NN userSingleTest = new NN();
-                            userSingleTest.testExistingNetwork("test.nn", liveTestDatafile);
+                            userSingleTest.testExistingNetwork("test.nn", liveTestDatafile, testFile);
                             Encog.getInstance().shutdown();
                         }
+                        do{
+                            System.out.println("Return to main Menu..? -> y/n");
+                            in = s.next().toLowerCase();
+                        }while (in.isEmpty() || !in.matches("[y]"));
                         break;
                     case 4:
                         do{
@@ -62,32 +89,67 @@ public class Menu extends Component {
                             in = s.next().toLowerCase();
                         }while (in.isEmpty() || !in.matches("[yn]"));
                         if (in.equalsIgnoreCase("y")){
+                            getUserInputNgram();
+                            getUserInputVector();
+                            String directoryPath = getUserinputFile();
+                            File [] testDirectory = new File(directoryPath).listFiles();
+                            for (File file : testDirectory) {
+                                VectorProcessor vp = new VectorProcessor(ngram, vector, file.getPath());
+                                vp.go();
+                                double [] dd = vp.getLiveData();
+                                liveTestDataDir.put(file.getName(), dd);
+                            }
 
-                            VectorProcessor vp = new VectorProcessor(ngram, vector, "frenchTest.txt");
-                            vp.go();
-                            double [] dd = vp.getLiveData();
                             NN nn = new NN();
-                            nn.testExistingNetwork("test.nn", dd);
+                            // using for-each loop for iteration over Map.entrySet()
+                            for (Map.Entry<String,double[]> e : liveTestDataDir.entrySet()){
+                                nn.testExistingNetwork("test.nn",e.getValue(), e.getKey());
+                            }
+
                             Encog.getInstance().shutdown();
                         }
+                        do{
+                            System.out.println("Return to main Menu..? -> y/n");
+                            in = s.next().toLowerCase();
+                        }while (in.isEmpty() || !in.matches("[y]"));
                         break;
                     case 5: printTopologyInfo();
+                        do{
+                            System.out.println("Return to main Menu..? -> y/n");
+                            in = s.next().toLowerCase();
+                        }while (in.isEmpty() || !in.matches("[y]"));
                         break;
                     case 6: printTrainingInfo();
+                        do{
+                            System.out.println("Return to main Menu..? -> y/n");
+                            in = s.next().toLowerCase();
+                        }while (in.isEmpty() || !in.matches("[y]"));
                         break;
                     case 7: printTestingInfo();
+                        do{
+                            System.out.println("Return to main Menu..? -> y/n");
+                            in = s.next().toLowerCase();
+                        }while (in.isEmpty() || !in.matches("[y]"));
                         break;
                     case 8: printVectorHashingInfo();
+                        do{
+                            System.out.println("Return to main Menu..? -> y/n");
+                            in = s.next().toLowerCase();
+                        }while (in.isEmpty() || !in.matches("[y]"));
                         break;
-                    case 9: System.out.println("Exiting application.");
-                        running = false;
+                    case 9:
+                        do{
+                            System.out.println("Exit Application..? -> y/n");
+                            in = s.next().toLowerCase();
+                        }while (in.isEmpty() || !in.matches("[yn]"));
+                        if (in.equalsIgnoreCase("y")) {
+                            running = false;
+                            System.out.println("Exiting application.");
+                        }
                         break;
                     default: System.out.println("Invalid Option");
                         break;
                 }
-            }catch (Exception e){
-                System.out.println("Only Numeric values accepted in menu..");
-            }
         }
     }
 
@@ -108,21 +170,6 @@ public class Menu extends Component {
         System.out.println("8 - View generating CSV   information.");
         System.out.println("9 - Quit the program:");
     }
-
-    /**
-     * Validate y/n input from scanner
-     * @return int choice
-     */
-    private String validateYesNo(String in){
-//        String in;
-        do{
-            System.out.println("You must have created a Neural Network prior to testing data.\n" +
-                    "Do you wish to continue..? -> y/n");
-            in = s.next().toLowerCase();
-        }while (in.isEmpty() || !in.matches("\"[yn]\""));
-        String y_n = in;
-        return  y_n;
-    }
     /**
      * Allow user to choose activation function.
      * Perform minimal error handling for typos. (Not intended to be exhaustive).
@@ -139,9 +186,9 @@ public class Menu extends Component {
             System.out.println(" 5 - BipolarSteepenedSigmoid.");
             System.out.println(" 6 - BiPolar.");
             in = s.next();
-        }while (in.isEmpty() || !in.matches("\\d[1-6]"));
+        }while (in.isEmpty() || !in.matches("[1-6]"));
         this.activationFunction = setActivation(Integer.parseInt(in));
-        System.out.println("Act F: " + activationFunction.getLabel());
+        System.out.println("Act F: \n" + activationFunction.getLabel());
     }
     /**
      * Allow user to choose ngram size.
@@ -155,7 +202,7 @@ public class Menu extends Component {
             in = s.next();
         }while(in.isEmpty() || !in.matches("\\d"));
         this.ngram = Integer.parseInt(in);
-        System.out.println("ngram: "+ngram);
+        System.out.println("ngram: \n"+ngram);
     }
     /**
      * Allow user to choose vector size.
@@ -169,7 +216,7 @@ public class Menu extends Component {
             in = s.next();
         }while(in.isEmpty() || !in.matches("\\d+"));
         this.vector = Integer.parseInt(in);
-        System.out.println("vector: "+vector);
+        System.out.println("vector: \n"+vector);
     }
     /**
      * User enter file for test data to be vectorised.
@@ -274,17 +321,19 @@ public class Menu extends Component {
         }
         return activationFunction;
     }
-    public static void main(String[] args) {
-        Menu m = new Menu();
-        m.doMenu();
 
-//        Scanner s = new Scanner(System.in);
-//        String in;
-//        do{
-//            System.out.println("Do you wish to continue..? -> y/n");
-//            in = s.next().toLowerCase();
-//        }while (in.isEmpty() || !in.matches("[yn]"));
-//        File[] files = new File("./TestData").listFiles();
-//        Utilities.showFilesInDir(files);
+    private void printNetworkPreferences(){
+        System.out.println("Preferences Set:\nNgram: " + ngram +"\nVector: " +vector
+                +"\nActivation Function: "+activationFunction.getLabel().toUpperCase());
     }
+
+
+//    public static void main(String[] args) throws InterruptedException {
+//        Menu m = new Menu();
+//
+//        NN defaultNetwork = new NN();
+//        defaultNetwork.trainNewNetwork(m.activationFunction, m.vector, m.filepath);
+//        Encog.getInstance().shutdown();
+//
+//    }
 }

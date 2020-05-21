@@ -2,6 +2,8 @@ package ie.gmit.sw;
 
 import java.io.File;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import org.encog.Encog;
 import org.encog.app.analyst.EncogAnalyst;
@@ -70,6 +72,7 @@ public class NN {
         network.addLayer(new BasicLayer(new ActivationSoftMax(), false, LANGUAGES));
         network.getStructure().finalizeStructure();
         network.reset();
+        System.out.println("Network Built.");
         return network;
     }
 
@@ -81,12 +84,13 @@ public class NN {
      */
     private MLDataSet buildDataset(String dataFilePath, int vectorSize){
         //========================= Generate Training Set ==============================
-        File dataFile = Utilities.getFileWithString(dataFilePath);
+        File dataFile = new File((dataFilePath));
+//        dataFile = Utilities.getFileWithString(dataFilePath);
         //Read the CSV file "data.csv" into memory. Encog expects your CSV file to have input + output number of columns.
         DataSetCODEC dsc = new CSVDataCODEC(dataFile, CSVFormat.ENGLISH, false, vectorSize, LANGUAGES, false);
         MemoryDataLoader mdl = new MemoryDataLoader(dsc);
         MLDataSet dataSet = mdl.external2Memory();
-
+        System.out.println("Dataset Built.");
         return dataSet;
     }
 
@@ -103,7 +107,7 @@ public class NN {
         FoldedDataSet folded = new FoldedDataSet(trainingSet);
         MLTrain train = new ResilientPropagation(network, folded);
         CrossValidationKFold crossValidationKFold = new CrossValidationKFold(train, 5);
-
+        System.out.println("Training Dataset.");
         //========= Train the neural network to error, for epochs =========
         // Trains to 9 epochs by default for recommended settings/vector size
         int epoch = 1;
@@ -119,11 +123,12 @@ public class NN {
             System.out.println("Epoch #" + epoch + " Run Time: " + period + " ms"
                     +" Error:" + df.format(crossValidationKFold.getError())+" Diff: "+df.format(diff));
             epoch++;
-        } while(crossValidationKFold.getError() > 0.001 && epoch < 10);
-        System.out.println("INFO: Total Train Time: " + totalTime + " ms");
+        } while(crossValidationKFold.getError() > 0.0001 && epoch < 10);
+        System.out.println("INFO: Training Complete.\nTotal Train Time: " + totalTime + " ms");
 
         // =============== Save the NN ========================
         Utilities.saveNeuralNetwork(network, "./test.nn");
+        System.out.println("Network saved as test.nn");
     }
 
     /**
@@ -152,8 +157,8 @@ public class NN {
         period = (endTime - startTime) / 1000000L;
         totalTime += period;
 
-        System.out.println("INFO: Correct: " + correct+" -- Total: "+ total + " Test time: "+period);
-        System.out.println("INFO: Training Complete. Accuracy = " + (correct / total)*100 + " Train time: "+period);
+        System.out.println("INFO: Correct Predictions: " + correct+" -- Total Predictions: "+ total + "\nTotal Test time: "+period);
+        System.out.println("INFO: Testing Complete. Accuracy = " + (correct / total)*100);
         System.out.println("INFO: Total Run Time: " + totalTime + " ms");
 
     }
@@ -165,8 +170,6 @@ public class NN {
      * @param dataFilePath Data to train, test and evaluate the network with.
      */
     public void trainNewNetwork(ActivationFunction activationFunction, int vectorSize, String dataFilePath){
-
-//        File dataFile = Utilities.getFileWithString(dataFilePath);
         // Establish network
         BasicNetwork network = buildNetwork( activationFunction, vectorSize);
         // Establish dataset for training and testing.
@@ -182,8 +185,8 @@ public class NN {
      * Test a pre-generated Neural Network on a data set.
      * @param nnPath The network for classifying the data.
      */
-    public void testExistingNetwork(String nnPath, double[] userTest ){
-        File nn = Utilities.getFileWithString(nnPath);
+    public void testExistingNetwork(String nnPath, double[] userTest, String filename){
+        File nn = new File(nnPath);
         BasicNetwork network = Utilities.loadNeuralNetwork(nn.getName());
         // Build basic data from vectorised user test file
         // http://heatonresearch-site.s3-website-us-east-1.amazonaws.com/javadoc/encog-3.3/org/encog/ml/data/basic/BasicMLData.html
@@ -191,7 +194,7 @@ public class NN {
         //Get actual index or predicted data
         int actualCategoryIndex = network.classify(testData);
         // Output the index
-        System.out.println(actualCategoryIndex + " " + langs[actualCategoryIndex]);
+        System.out.println("TestFile: "+filename+ " - Predicted Language: " + langs[actualCategoryIndex]);
 //        EncogAnalyst analyst = new EncogAnalyst();
 //        analyst.load(dataFile);
     }
@@ -222,20 +225,33 @@ public class NN {
         return predictedLang;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
-//        File in = new File("frenchTest.txt");
-        VectorProcessor vp = new VectorProcessor(2, 500, "frenchTest.txt");
-        vp.go();
-        double [] dd = vp.getLiveData();
-        ActivationFunction activationFunction = new ActivationElliottSymmetric();
-//        File aaa = new File("./2gram/data500.csv");
-//        File nnn = new File("test.nn");
-        NN nn = new NN();
-        nn.trainNewNetwork(activationFunction, 500, "./2gram/data500.csv");
-        nn.testExistingNetwork("test.nn", dd);
-        // Shut down the Neural Network
-        Encog.getInstance().shutdown();
+////        File in = new File("frenchTest.txt");
+//        ArrayList<double []> liveTestDataDir = new ArrayList<>();
+//
+////        File [] files = new File("./TestData").listFiles();
+////        for (File file : files) {
+////            VectorProcessor vp = new VectorProcessor(2, 500, file.getPath());
+////            vp.go();
+////            double [] dd = vp.getLiveData();
+////            liveTestDataDir.add(dd);
+////        }
+////        File aaa = new File("./2gram/data500.csv");
+////        File nnn = new File("test.nn");
+//        VectorProcessor vp = new VectorProcessor(2, 1000);
+//        vp.go();
+//        TimeUnit.SECONDS.sleep(2);
+//        NN nn = new NN();
+//        ActivationFunction activationFunction = new ActivationElliottSymmetric();
+//        nn.trainNewNetwork(activationFunction, 1000, "data1000.csv");
+////        nn.trainNewNetwork(activationFunction, 500, "data500.csv");
+////        for (double [] d: liveTestDataDir) {
+////            nn.testExistingNetwork("test.nn", d);
+////        }
+//
+//        // Shut down the Neural Network
+//        Encog.getInstance().shutdown();
     }
 }
 

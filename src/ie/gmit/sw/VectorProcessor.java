@@ -42,13 +42,13 @@ public class VectorProcessor extends Component {
         this.ngramSize = ngramSize;
         this.arraySize = arraySize;
         this.isUser = true;
-        this.user_file = Utilities.getFileWithString(userFilePath);
+        this.user_file = new File(userFilePath);
     }
 
     public void go(){
         ExecutorService es = Executors.newFixedThreadPool(2);
         File inFile = wili_file;
-        if (isUser) inFile = new File (user_file.getName());
+        if (isUser) inFile = user_file;
         try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(inFile)))){
             String line;
             while ((line = br.readLine()) != null){
