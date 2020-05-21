@@ -21,17 +21,28 @@ public class VectorProcessor extends Component {
     int longestLine = -1;
     int totalLines = 0;
 
+    /**
+     * Process the wilitext file with text and language identifiers
+     * @param ngramSize
+     * @param arraySize
+     */
     public VectorProcessor(int ngramSize, int arraySize) {
         this.ngramSize = ngramSize;
         this.arraySize = arraySize;
         this.isUser = false;
     }
 
-    public VectorProcessor(int ngramSize, int arraySize, File userFile) {
+    /**
+     * vectorize a single file to an array
+     * @param ngramSize
+     * @param arraySize
+     * @param userFilePath
+     */
+    public VectorProcessor(int ngramSize, int arraySize, String userFilePath) {
         this.ngramSize = ngramSize;
         this.arraySize = arraySize;
         this.isUser = true;
-        this.user_file = userFile;
+        this.user_file = Utilities.getFileWithString(userFilePath);
     }
 
     public void go(){
@@ -62,6 +73,10 @@ public class VectorProcessor extends Component {
 
     }
 
+    /**
+     * Live data - vectorized array result from user input text.
+     * @return vectorized array.
+     */
     public double[] getLiveData() {
         return liveData;
     }
@@ -71,8 +86,9 @@ public class VectorProcessor extends Component {
      * Add to double array.
      * Generate second array (langValues) of 235 'Zeroes',
      *  -> except from a single 'One' representing expected language.
-     * @param ngram
-     * @param line
+     * Output both arrays as a single csv file of vectors followed by language values.
+     * @param ngram size of ngram to break text into
+     * @param line line of text being parsed into text and language
      */
     public void processWiliTxt(int ngram, String line) throws IOException {
 
@@ -100,8 +116,6 @@ public class VectorProcessor extends Component {
 //        printDArray(allLangValues); // Testing
         outputCsvFile(vector, allLangValues, arraySize);
     }//process
-
-
 
     /**
      * Take the array of vector values and the array of Languages
@@ -174,16 +188,6 @@ public class VectorProcessor extends Component {
         return temp;
     }
 
-    /**
-     * Print the contents of an array of Doubles
-     * @param d array to print
-     */
-    public void printDArray(double[] d){
-        for (int i = 0; i < d.length; i++) {
-            System.out.print(" : " + d[i]+" : ");
-        }
-        System.out.println();
-    }
 
     public static void main(String[] args) throws IOException {
 //        int arraysize = 50;

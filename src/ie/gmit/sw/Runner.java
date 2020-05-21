@@ -42,7 +42,7 @@ public class Runner {
 		ActivationFunction a = new ActivationElliottSymmetric();
 		File file = new File("data200.csv");
 //		File nnFile = new File("test.nn");
-		nn.trainNewNetwork(a, 200, file);
+//		nn.trainNewNetwork(a, 200, file);
 //		nn.trainNewNetwork(a, file);
 		Encog.getInstance().shutdown();
 	}

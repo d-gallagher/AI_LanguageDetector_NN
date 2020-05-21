@@ -75,12 +75,13 @@ public class NN {
 
     /**
      * Take a pre-generated vector hashed file input in csv format and convert to a ML dataset.
-     * @param dataFile input csv file.
+     * @param dataFilePath input csv file path.
      * @param vectorSize amount of input node columns in file.
      * @return ML dataset for use in network training/testing/evaluation.
      */
-    private MLDataSet buildDataset(File dataFile, int vectorSize){
+    private MLDataSet buildDataset(String dataFilePath, int vectorSize){
         //========================= Generate Training Set ==============================
+        File dataFile = Utilities.getFileWithString(dataFilePath);
         //Read the CSV file "data.csv" into memory. Encog expects your CSV file to have input + output number of columns.
         DataSetCODEC dsc = new CSVDataCODEC(dataFile, CSVFormat.ENGLISH, false, vectorSize, LANGUAGES, false);
         MemoryDataLoader mdl = new MemoryDataLoader(dsc);
@@ -161,13 +162,15 @@ public class NN {
      * Build, train and evaluate a new Neural network.
      * @param activationFunction User selected or default suggested activation function.
      * @param vectorSize User selected or default suggested vector size.
-     * @param dataFile Data to train, test and evaluate the network with.
+     * @param dataFilePath Data to train, test and evaluate the network with.
      */
-    public void trainNewNetwork(ActivationFunction activationFunction, int vectorSize, File dataFile){
+    public void trainNewNetwork(ActivationFunction activationFunction, int vectorSize, String dataFilePath){
+
+//        File dataFile = Utilities.getFileWithString(dataFilePath);
         // Establish network
         BasicNetwork network = buildNetwork( activationFunction, vectorSize);
         // Establish dataset for training and testing.
-        MLDataSet data = buildDataset(dataFile, vectorSize);
+        MLDataSet data = buildDataset(dataFilePath, vectorSize);
         // Train to epochs (hardcoded at 9)
         trainDataset(data, network);
         // Evaluate the network against the test data
@@ -177,9 +180,10 @@ public class NN {
 
     /**
      * Test a pre-generated Neural Network on a data set.
-     * @param nn The network for classifying the data.
+     * @param nnPath The network for classifying the data.
      */
-    public void testExistingNetwork(File nn, double[] userTest ){
+    public void testExistingNetwork(String nnPath, double[] userTest ){
+        File nn = Utilities.getFileWithString(nnPath);
         BasicNetwork network = Utilities.loadNeuralNetwork(nn.getName());
         // Build basic data from vectorised user test file
         // http://heatonresearch-site.s3-website-us-east-1.amazonaws.com/javadoc/encog-3.3/org/encog/ml/data/basic/BasicMLData.html
@@ -190,17 +194,6 @@ public class NN {
         System.out.println(actualCategoryIndex + " " + langs[actualCategoryIndex]);
 //        EncogAnalyst analyst = new EncogAnalyst();
 //        analyst.load(dataFile);
-    }
-
-    /**
-     * Print the contents of an array of Doubles
-     * @param d array to print
-     */
-    public void printDArray(double[] d){
-        for (int i = 0; i < d.length; i++) {
-            System.out.print(" : " + df.format(d[i])+" : ");
-        }
-        System.out.println();
     }
 
     /**
@@ -231,16 +224,16 @@ public class NN {
 
     public static void main(String[] args) {
 
-        File in = new File("frenchTest.txt");
-        VectorProcessor vp = new VectorProcessor(2, 500, in);
+//        File in = new File("frenchTest.txt");
+        VectorProcessor vp = new VectorProcessor(2, 500, "frenchTest.txt");
         vp.go();
         double [] dd = vp.getLiveData();
-        ActivationFunction act = new ActivationElliottSymmetric();
-        File aaa = new File("./2gram/data500.csv");
+        ActivationFunction activationFunction = new ActivationElliottSymmetric();
+//        File aaa = new File("./2gram/data500.csv");
+//        File nnn = new File("test.nn");
         NN nn = new NN();
-//        nn.trainNewNetwork(act, 500, aaa);
-        File nnn = new File("test.nn");
-        nn.testExistingNetwork(nnn, dd);
+        nn.trainNewNetwork(activationFunction, 500, "./2gram/data500.csv");
+        nn.testExistingNetwork("test.nn", dd);
         // Shut down the Neural Network
         Encog.getInstance().shutdown();
     }

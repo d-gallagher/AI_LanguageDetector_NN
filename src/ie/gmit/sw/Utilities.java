@@ -82,21 +82,45 @@ public class Utilities extends Component {
         }
     }
 
-    public static File getFileWithGUI(){
-        File selectedFile = null;
+    /**
+     * Open a GUI to select a file.
+     * @return filepath to the selected file
+     */
+    public static String getFileWithGUI(){
+        String selectedFile = null;
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Choose Reference Library txt file..");
         fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
         int result = fileChooser.showOpenDialog(null);
         if (result == JFileChooser.APPROVE_OPTION) {
-            selectedFile = fileChooser.getSelectedFile();
-            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+            selectedFile = fileChooser.getSelectedFile().getAbsolutePath();
+            System.out.println("Selected file: " + selectedFile);
         }
         return selectedFile;
     }
 
+    /**
+     * Get a File with the path to the file
+     * @param path path/to/file
+     * @return File at end of path
+     */
     public static File getFileWithString(String path){
         File selectedFile = new File("path");
         return selectedFile;
+    }
+
+    /**
+     * Recursively list all file in a directory, in a directory ad infinitum
+     * @param files starting directory for the recursion
+     */
+    public static void showFilesInDir(File[] files) {
+        for (File file : files) {
+            if (file.isDirectory()) {
+                System.out.println("Directory: " + file.getName());
+                showFilesInDir(file.listFiles()); // Calls same method again.
+            } else {
+                System.out.println("File: " + file.getName());
+            }
+        }
     }
 }

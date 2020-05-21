@@ -1,10 +1,11 @@
 package ie.gmit.sw;
 
+import org.encog.Encog;
 import org.encog.engine.network.activation.*;
 
-import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu extends Component {
@@ -13,52 +14,70 @@ public class Menu extends Component {
     private ActivationFunction activationFunction = new ActivationElliottSymmetric();
     private int ngram = 2;
     private int vector = 500;
+    private ArrayList<double []> liveTestDataDir = new ArrayList<>();
+    private double [] liveTestDatafile;
 
     public void doMenu(){
         while (running){
+            String in;
             printOptions();
             try {
                 int option = Integer.parseInt(s.next());
                 switch (option){
                     case 1:
-                        getUserInputNgram();
-                        getUserInputVector();
-                        getUserInputActFunction();
+                        getUserInputNgram();        // reset default ngram size
+                        getUserInputVector();       // reset default vector size
+                        getUserInputActFunction();  // reset default activation function
                         break;
-                    case 2:
+                    case 2: // Build and run (train test evaluate), and save neural network.
                         VectorProcessor defaultVP = new VectorProcessor(ngram, vector);
                         defaultVP.go();
-                        File f = new File("data" + vector + ".csv");
+//                        File f = new File("data" + vector + ".csv");
                         NN defaultNetwork = new NN();
-                        defaultNetwork.trainNewNetwork(activationFunction, vector, f);
+                        defaultNetwork.trainNewNetwork(activationFunction, vector, "data" + vector + ".csv");
+                        Encog.getInstance().shutdown();
                         break;
-                    case 3: printTopologyInfo();
+                    case 3:
+                            do{
+                                System.out.println("You must have created a Neural Network prior to testing data.\n" +
+                                    "Do you wish to continue..? -> y/n");
+                                in = s.next().toLowerCase();
+                            }while (in.isEmpty() || !in.matches("[yn]"));
+                        if (in.equalsIgnoreCase("y")) {
+                            getUserInputNgram();
+                            getUserInputVector();
+                            String testFile = getUserinputFile();
+                            VectorProcessor userVP = new VectorProcessor(ngram, vector, testFile);
+                            userVP.go();
+                            liveTestDatafile = userVP.getLiveData();
+                            NN userSingleTest = new NN();
+                            userSingleTest.testExistingNetwork("test.nn", liveTestDatafile);
+                            Encog.getInstance().shutdown();
+                        }
                         break;
-                    case 4: printTrainingInfo();
-                        break;
-                    case 5: printTestingInfo();
-                        break;
-                    case 6: printVectorHashingInfo();
-                        break;
-                    case 7:
-                        getUserInputNgram();
-                        getUserInputVector();
-                        File testFile = getUserinputFile();
-                        VectorProcessor userVP = new VectorProcessor(ngram, vector, testFile);
-                        userVP.go();
-                        break;
-                    case 8:
-                        System.out.println("This feature may crash the application..");
-                        System.out.println("To minimize failure, follow 'Option 2' first and create a default/custom network.");
-                        System.out.println("If you don't already have your test data, follow 'Option 7' before running this test.");
-                        String in;
+                    case 4:
                         do{
-                            System.out.println("Do you wish to continue..? -> y/n");
+                            System.out.println("You must have created a Neural Network prior to testing data.\n" +
+                                    "Do you wish to continue..? -> y/n");
                             in = s.next().toLowerCase();
-                        }while (in.isEmpty() || !in.matches("^(?:y\\b|n\\b)\n"));
+                        }while (in.isEmpty() || !in.matches("[yn]"));
                         if (in.equalsIgnoreCase("y")){
 
+                            VectorProcessor vp = new VectorProcessor(ngram, vector, "frenchTest.txt");
+                            vp.go();
+                            double [] dd = vp.getLiveData();
+                            NN nn = new NN();
+                            nn.testExistingNetwork("test.nn", dd);
+                            Encog.getInstance().shutdown();
                         }
+                        break;
+                    case 5: printTopologyInfo();
+                        break;
+                    case 6: printTrainingInfo();
+                        break;
+                    case 7: printTestingInfo();
+                        break;
+                    case 8: printVectorHashingInfo();
                         break;
                     case 9: System.out.println("Exiting application.");
                         running = false;
@@ -81,15 +100,29 @@ public class Menu extends Component {
         System.out.println("-------- Select one of the following options --------");
         System.out.println("1 - Customize Neural Network preferences.");
         System.out.println("2 - Build Neural Network with custom/default preferences.");
-        System.out.println("3 - View network TOPOLOGY information.");
-        System.out.println("4 - View network TRAINING information.");
-        System.out.println("5 - View network TESTING  information.");
-        System.out.println("6 - View generating CSV   information.");
-        System.out.println("7 - Generate CSV with personal test data.");
-        System.out.println("8 - Test your test/live data against the Network.");
+        System.out.println("3 - Test single live data file against the Network.");
+        System.out.println("4 - Test directory containing test/live data against the Network.");
+        System.out.println("5 - View network TOPOLOGY information.");
+        System.out.println("6 - View network TRAINING information.");
+        System.out.println("7 - View network TESTING  information.");
+        System.out.println("8 - View generating CSV   information.");
         System.out.println("9 - Quit the program:");
     }
 
+    /**
+     * Validate y/n input from scanner
+     * @return int choice
+     */
+    private String validateYesNo(String in){
+//        String in;
+        do{
+            System.out.println("You must have created a Neural Network prior to testing data.\n" +
+                    "Do you wish to continue..? -> y/n");
+            in = s.next().toLowerCase();
+        }while (in.isEmpty() || !in.matches("\"[yn]\""));
+        String y_n = in;
+        return  y_n;
+    }
     /**
      * Allow user to choose activation function.
      * Perform minimal error handling for typos. (Not intended to be exhaustive).
@@ -142,9 +175,9 @@ public class Menu extends Component {
      * User enter file for test data to be vectorised.
      * @return file test data.
      */
-    private File getUserinputFile(){
+    private String getUserinputFile(){
 
-        File selectedFile = null;
+        String selectedFile = null;
         //user enter option
         String in;
         do {
@@ -153,19 +186,13 @@ public class Menu extends Component {
         }while(in.isEmpty() || !in.matches("\\d+"));
         int selection = Integer.parseInt(in);
         switch (selection) {
-            case 1: JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setDialogTitle("Choose Reference Library txt file..");
-                fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-                int result = fileChooser.showOpenDialog(this);
-                if (result == JFileChooser.APPROVE_OPTION) {
-                    selectedFile = fileChooser.getSelectedFile();
-                    System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-                }
+            case 1:
+                    selectedFile = Utilities.getFileWithGUI();
                 break;
             case 2:
                 System.out.println("Type filepath: \n");
                 in = s.next();
-                File user_file = new File(in);
+                selectedFile = in;
                 break;
             default: break;
         }
@@ -250,5 +277,14 @@ public class Menu extends Component {
     public static void main(String[] args) {
         Menu m = new Menu();
         m.doMenu();
+
+//        Scanner s = new Scanner(System.in);
+//        String in;
+//        do{
+//            System.out.println("Do you wish to continue..? -> y/n");
+//            in = s.next().toLowerCase();
+//        }while (in.isEmpty() || !in.matches("[yn]"));
+//        File[] files = new File("./TestData").listFiles();
+//        Utilities.showFilesInDir(files);
     }
 }
