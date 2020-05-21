@@ -1,0 +1,387 @@
+NN -> 3 Layer w/GPR-Hidden - 20 Epochs - CrossValidationKFold - no dropoff, ngram size 2, Act ReLU
+csv50:
+INFO: Total Train Time: 25178 ms
+INFO: Correct: 325.0 -- Total: 11739.0 Test time: 481
+INFO: Training Complete. Accuracy = 2.768549280177187 Train time: 481
+INFO: Total Run Time: 25659 ms and 11739.0 runs
+
+csv100:
+INFO: Total Train Time: 44323 ms
+INFO: Correct: 343.0 -- Total: 11739.0 Test time: 774
+INFO: Training Complete. Accuracy = 2.921884317233155 Train time: 774
+INFO: Total Run Time: 45097 ms and 11739.0 runs
+
+csv150:
+INFO: Total Train Time: 67707 ms
+INFO: Correct: 347.0 -- Total: 11739.0 Test time: 1053
+INFO: Training Complete. Accuracy = 2.9559587699122583 Train time: 1053
+INFO: Total Run Time: 68760 ms and 11739.0 runs
+
+csv200:
+INFO: Total Train Time: 114337 ms
+INFO: Correct: 319.0 -- Total: 11739.0 Test time: 1440
+INFO: Training Complete. Accuracy = 2.7174376011585313 Train time: 1440
+INFO: Total Run Time: 115777 ms
+
+csv250:
+INFO: Total Train Time: 153511 ms
+INFO: Correct: 339.0 -- Total: 11739.0 Test time: 1792
+INFO: Training Complete. Accuracy = 2.8878098645540504 Train time: 1792
+INFO: Total Run Time: 155303 ms
+
+csv300:
+INFO: Total Train Time: 163303 ms
+INFO: Correct: 127.0 -- Total: 11739.0 Test time: 2109
+INFO: Training Complete. Accuracy = 1.0818638725615468 Train time: 2109
+INFO: Total Run Time: 165412 ms
+
+csv350:
+INFO: Total Train Time: 241071 ms
+INFO: Correct: 425.0 -- Total: 11739.0 Test time: 2371
+INFO: Training Complete. Accuracy = 3.620410597154783 Train time: 2371
+INFO: Total Run Time: 243442 ms
+
+csv400:
+INFO: Total Train Time: 285866 ms
+INFO: Correct: 460.0 -- Total: 11739.0 Test time: 2820
+INFO: Training Complete. Accuracy = 3.9185620580969416 Train time: 2820
+INFO: Total Run Time: 288686 ms
+
+csv450:
+INFO: Total Train Time: 327891 ms
+INFO: Correct: 418.0 -- Total: 11739.0 Test time: 3239
+INFO: Training Complete. Accuracy = 3.5607803049663516 Train time: 3239
+INFO: Total Run Time: 331130 ms
+
+csv500:
+INFO: Total Train Time: 373521 ms
+INFO: Correct: 467.0 -- Total: 11739.0 Test time: 3684
+INFO: Training Complete. Accuracy = 3.9781923502853735 Train time: 3684
+INFO: Total Run Time: 377205 ms
+
+=======================================================================================
+
+NN -> 3 Layer w/GPR-Hidden - 20 Epochs - CrossValidationKFold - no dropoff, ngram size 3, Act ReLU
+csv50:
+INFO: Total Train Time: 25836 ms
+INFO: Correct: 341.0 -- Total: 11739.0 Test time: 462
+INFO: Training Complete. Accuracy = 2.904847090893602
+Total Run Time: 26842 ms and 11739.0 runs
+
+csv100:
+INFO: Total Train Time: 46239 ms
+INFO: Correct: 211.0 -- Total: 11739.0 Test time: 926
+INFO: Training Complete. Accuracy = 1.7974273788227277
+Total Run Time: 45856 ms and 11739.0 runs
+
+csv150:
+INFO: Total Train Time: 64930 ms
+INFO: Correct: 372.0 -- Total: 11739.0 Test time: 1090
+INFO: Training Complete. Accuracy = 3.168924099156657
+Total Run Time: 66841 ms and 11739.0 runs
+
+csv200:
+INFO: Total Train Time: 87552 ms
+INFO: Correct: 403.0 -- Total: 11739.0 Test time: 1396
+INFO: Training Complete. Accuracy = 3.433001107419712 Train time: 1396
+INFO: Total Run Time: 88948 ms and 11739.0 runs
+
+csv250:
+INFO: Total Train Time: 120908 ms
+INFO: Correct: 381.0 -- Total: 11739.0 Test time: 1689
+INFO: Training Complete. Accuracy = 3.245591617684641 Train time: 1689
+INFO: Total Run Time: 122597 ms and 11739.0 runs
+
+csv300:
+INFO: Total Train Time: 157899 ms
+INFO: Correct: 374.0 -- Total: 11739.0 Test time: 2042
+INFO: Training Complete. Accuracy = 3.1859613254962094 Train time: 2042
+INFO: Total Run Time: 159941 ms and 11739.0 runs
+
+csv350:
+INFO: Total Train Time: 224418 ms
+INFO: Correct: 391.0 -- Total: 11739.0 Test time: 2373
+INFO: Training Complete. Accuracy = 3.3307777493824005 Train time: 2373
+INFO: Total Run Time: 226791 ms and 11739.0 runs
+
+csv400:
+INFO: Total Train Time: 299757 ms
+INFO: Correct: 398.0 -- Total: 11739.0 Test time: 2811
+INFO: Training Complete. Accuracy = 3.3904080415708324 Train time: 2811
+INFO: Total Run Time: 302568 ms and 11739.0 runs
+
+csv450:
+INFO: Total Train Time: 324461 ms
+INFO: Correct: 414.0 -- Total: 11739.0 Test time: 3095
+INFO: Training Complete. Accuracy = 3.5267058522872476 Train time: 3095
+INFO: Total Run Time: 327556 ms
+
+csv500:
+INFO: Total Train Time: 395648 ms
+INFO: Correct: 459.0 -- Total: 11739.0 Test time: 3609
+INFO: Training Complete. Accuracy = 3.9100434449271657 Train time: 3609
+INFO: Total Run Time: 399257 ms
+
+csv1200:
+INFO: Total Train Time: 1511017 ms
+INFO: Correct: 617.0 -- Total: 11739.0 Test time: 11105
+INFO: Training Complete. Accuracy = 5.2559843257517675 Train time: 11105
+INFO: Total Run Time: 1522122 ms and 11739.0 runs
+
+===============================================================
+------------------------- WITH DROPOUT ------------------------
+
+NN -> 3 Layer w/GPR-Hidden - 20 Epochs - CrossValidationKFold - dropout 0.8 - ngram size 2, Act ReLU
+
+csv50:
+INFO: Total Train Time: 24410 ms
+INFO: Correct: 314.0 -- Total: 11739.0 Test time: 466
+INFO: Training Complete. Accuracy = 2.6748445353096515 Train time: 466
+INFO: Total Run Time: 24876 ms
+
+csv100:
+INFO: Total Train Time: 47658 ms
+INFO: Correct: 310.0 -- Total: 11739.0 Test time: 790
+INFO: Training Complete. Accuracy = 2.640770082630548 Train time: 790
+INFO: Total Run Time: 48448 ms
+
+csv150:
+INFO: Total Train Time: 68169 ms
+INFO: Correct: 353.0 -- Total: 11739.0 Test time: 1071
+INFO: Training Complete. Accuracy = 3.0070704489309144 Train time: 1071
+INFO: Total Run Time: 69240 ms
+
+csv200:
+INFO: Total Train Time: 103388 ms
+INFO: Correct: 294.0 -- Total: 11739.0 Test time: 1334
+INFO: Training Complete. Accuracy = 2.5044722719141324 Train time: 1334
+INFO: Total Run Time: 104722 ms
+
+csv250:
+INFO: Total Train Time: 114878 ms
+INFO: Correct: 388.0 -- Total: 11739.0 Test time: 1640
+INFO: Training Complete. Accuracy = 3.3052219098730724 Train time: 1640
+INFO: Total Run Time: 116518 ms
+
+csv300:
+INFO: Total Train Time: 155647 ms
+INFO: Correct: 375.0 -- Total: 11739.0 Test time: 2018
+INFO: Training Complete. Accuracy = 3.1944799386659852 Train time: 2018
+INFO: Total Run Time: 157665 ms
+
+
+
+
+==================
+NN -> 3 Layer w/GPR-Hidden - 10 Epochs - CrossValidationKFold - dropout 0.8 - ngram size 2 - vector 300
+
+ReLU = Accuracy = 5.963029218843173
+INFO: Total Train Time: 87368 ms
+INFO: Total Test  Time: 2465  ms
+INFO: Total Run   Time: 89833 ms
+INFO: Correct: 700.0 -- Total: 11739.0
+INFO: Training Complete.
+
+Elliott - Accuracy = 3.3648522020615044
+INFO: Total Train Time: 78199 ms
+INFO: Total Test  Time: 1992  ms
+INFO: Total Run   Time: 80191 ms
+INFO: Correct: 395.0 -- Total: 11739.0
+INFO: Training Complete.
+
+Sigmoid - Accuracy = 15.512394582162022
+INFO: Total Train Time: 84100 ms
+INFO: Total Test  Time: 2650  ms
+INFO: Total Run   Time: 86750 ms
+INFO: Correct: 1821.0 -- Total: 11739.0
+INFO: Training Complete.
+
+BiPolar - Accuracy = 73.44748274980833
+INFO: Total Train Time: 81465 ms
+INFO: Total Test  Time: 2009  ms
+INFO: Total Run   Time: 83474 ms
+INFO: Correct: 8622.0 -- Total: 11739.0
+INFO: Training Complete.
+
+SteepenedSigmoid - Accuracy = 5.664877757901014
+INFO: Total Train Time: 92297 ms
+INFO: Total Test  Time: 2998  ms
+INFO: Total Run   Time: 95295 ms
+INFO: Correct: 665.0 -- Total: 11739.0
+INFO: Training Complete.
+
+BipolarSteepenedSigmoid - Accuracy = 78.7034670755601
+INFO: Total Train Time: 64872 ms
+INFO: Total Test  Time: 2070  ms
+INFO: Total Run   Time: 66942 ms
+INFO: Correct: 9239.0 -- Total: 11739.0
+INFO: Training Complete.
+
+ClippedLinear - Accuracy = 81.41238606354887
+INFO: Total Train Time: 81963 ms
+INFO: Total Test  Time: 1909  ms
+INFO: Total Run   Time: 83872 ms
+INFO: Correct: 9557.0 -- Total: 11739.0
+INFO: Training Complete.
+
+TANH - Accuracy = 82.63054774682682
+INFO: Total Train Time: 85024 ms
+INFO: Total Test  Time: 2215  ms
+INFO: Total Run Time: 87239 ms
+INFO: Correct: 9700.0 -- Total: 11739.0
+INFO: Training Complete.
+
+Competitive
+REQUIRED DERIVATIVE..
+
+ElliottSymmetric - Accuracy = 85.66317403526705
+INFO: Total Train Time: 82450 ms
+INFO: Total Test  Time: 1906  ms
+INFO: Total Run   Time: 84356 ms
+INFO: Correct: 10056.0 -- Total: 11739.0
+INFO: Training Complete.
+
+Gaussian - Accuracy = 0.6218587613936452
+INFO: Total Train Time: 94735 ms
+INFO: Total Test  Time: 2671  ms
+INFO: Total Run   Time: 97406 ms
+INFO: Correct: 73.0 -- Total: 11739.0
+INFO: Training Complete.
+
+Linear - Accuracy = 2.4789164324048043
+INFO: Total Train Time: 107410 ms
+INFO: Total Test  Time: 2422   ms
+INFO: Total Run   Time: 109832 ms
+INFO: Correct: 291.0 -- Total: 11739.0
+INFO: Training Complete.
+
+LOG - Accuracy = 84.82834994462901
+INFO: Total Train Time: 82345 ms
+INFO: Total Test  Time:
+INFO: Correct: 9958.0 -- Total: 11739.0
+INFO: Training Complete.
+INFO: Total Run Time: 84329 ms
+
+Ramp  - Accuracy = 4.267825198057756
+INFO: Total Train Time: 83431 ms
+INFO: Total Test  Time: 2399 ms
+INFO: Total Run   Time: 85830 ms
+INFO: Correct: 501.0 -- Total: 11739.0
+INFO: Training Complete.
+
+SIN - Accuracy = 0.4855609506772297
+INFO: Total Train Time: 97622 ms
+INFO: Total Test  Time: 2068
+INFO: Total Run   Time: 99690 ms
+INFO: Correct: 57.0 -- Total: 11739.0
+INFO: Training Complete.
+
+Step - Accuracy = 6.814890535820768
+INFO: Total Train Time: 81768 ms
+INFO: Total Test  Time: 2401 ms
+INFO: Total Run   Time: 84169 ms
+INFO: Correct: 800.0 -- Total: 11739.0
+INFO: Training Complete.
+
+
+All tests are from normalised to range (0 - 1) - worth testing range (-1 - 1)..?
+
+================ TABLE OF STATS ON TOP PERFORMING ACTIVATION FUNCTIONS FOR VECTOR 300 =====================
+|   Activation Function   | Accuracy | Train Time | Test Time | Max Acc / 20 Epoch Time / drop off ep/err |
+|-------------------------|----------|------------|-----------|-------------------------------------------|
+| ElliottSymmetric        |  85.663  |  82450 ms  |    1906   | ~ 87%   /    165k ms.   / ~ 14 - .00131   |
+| LOG                     |  84.828  |  82345 ms  |    2160   | ~ 86%   /    150k ms.   / ~ 12 - .00162   |
+| TANH                    |  82.630  |  85024 ms  |    2215   | ~ 84%   /    172k ms.   / ~ 15 - .00162   |
+| ClippedLinear           |  81.412  |  81963 ms  |    1909   | ~ 83%   /    164k ms.   / ~ 15 - .00167   |
+| BipolarSteepenedSigmoid |  78.703  |  64872 ms  |    2070   | ~ 81%   /    164k ms.   / ~ 11 - .00187   |
+| BiPolar                 |  73.447  |  81465 ms  |    2009   | ~ 74%   /    150k ms.   / ~ 14 - .00217   |
+===========================================================================================================
+== 2GRAMS ==
+CSV350 - EllSymm
+INFO: Total Train Time: 158505 ms
+INFO: Correct: 10373.0 -- Total: 11739.0 Test time: 2295
+INFO: Training Complete. Accuracy = 88.36357441008604 Train time: 2295
+INFO: Total Run Time: 160800 ms
+Epoch #15 Run Time: 10594 ms Error:0.0011673 Diff: -0.0000056
+
+csv500
+INFO: Total Train Time: 287116 ms
+INFO: Correct: 10760.0 -- Total: 11739.0 Test time: 3549
+INFO: Training Complete. Accuracy = 91.66027770678934 Train time: 3549
+INFO: Total Run Time: 290665 ms
+Epoch #9 Run Time: 18585 ms Error:0.001057 Diff: -0.0000225
+Epoch #15 Run Time: 18436 ms Error:0.0010007 Diff: -0.000007
+
+csv500
+Epoch #9 Run Time: 18524 ms Error:0.0010118 Diff: -0.0000197
+INFO: Total Train Time: 166365 ms
+INFO: Correct: 10652.0 -- Total: 11739.0 Test time: 3359
+INFO: Training Complete. Accuracy = 90.74026748445353 Train time: 3359
+INFO: Total Run Time: 169724 ms
+
+csv500 range from -1 - 1
+Epoch #9 Run Time: 19877 ms Error:0.0045225 Diff: 0.0001187
+INFO: Total Train Time: 168512 ms
+INFO: Correct: 3603.0 -- Total: 11739.0 Test time: 3497
+INFO: Training Complete. Accuracy = 30.692563250702786 Train time: 3497
+INFO: Total Run Time: 172009 ms
+
+== 4GRAMS ==
+csv300:20 epoch
+Epoch #19 Run Time: 8039 ms Error:0.0038136 Diff: -0.000011
+INFO: Total Train Time: 156795 ms
+INFO: Correct: 5738.0 -- Total: 11739.0 Test time: 2141
+INFO: Training Complete. Accuracy = 48.87980236817447 Train time: 2141
+INFO: Total Run Time: 158936 ms
+
+== 3GRAMS ==
+csv300: 20epoch
+Epoch #19 Run Time: 7731 ms Error:0.0022329 Diff: -0.0000093
+INFO: Total Train Time: 148505 ms
+INFO: Correct: 9009.0 -- Total: 11739.0 Test time: 2101
+INFO: Training Complete. Accuracy = 76.74418604651163 Train time: 2101
+INFO: Total Run Time: 150606 ms
+
+
+Epoch #1 Run Time: 7426 ms Error:0.0049449 Diff: 0.0049449
+Epoch #2 Run Time: 7261 ms Error:0.0037139 Diff: -0.001231
+Epoch #3 Run Time: 7355 ms Error:0.0030349 Diff: -0.000679
+Epoch #4 Run Time: 8413 ms Error:0.0028138 Diff: -0.0002212
+Epoch #5 Run Time: 8446 ms Error:0.0026827 Diff: -0.000131
+Epoch #6 Run Time: 8278 ms Error:0.0025944 Diff: -0.0000884
+Epoch #7 Run Time: 8297 ms Error:0.0025237 Diff: -0.0000707
+Epoch #8 Run Time: 8313 ms Error:0.0024752 Diff: -0.0000485
+Epoch #9 Run Time: 8396 ms Error:0.0024337 Diff: -0.0000415
+INFO: Total Train Time: 72185 ms
+INFO: Correct: 8648.0 -- Total: 11739.0 Test time: 1961
+INFO: Training Complete. Accuracy = 73.6689666922225 Train time: 1961
+INFO: Total Run Time: 74146 ms
+
+// 2gram 1000vector
+Epoch #1 Run Time: 48134 ms Error:0.0026906 Diff: 0.0026906
+Epoch #2 Run Time: 46020 ms Error:0.0011932 Diff: -0.0014973
+Epoch #3 Run Time: 49106 ms Error:0.0009759 Diff: -0.0002174
+INFO: Total Train Time: 143260 ms
+INFO: Correct: 8438.0 -- Total: 9123.0 Test time: 7835
+INFO: Training Complete. Accuracy = 92.4915049873945 Train time: 7835
+INFO: Total Run Time: 151095 ms
+
+Network Built.
+Dataset Built.
+1k vector 2gram
+Epoch #1 Run Time: 49116 ms Error:0.0027888 Diff: 0.0027888
+Epoch #2 Run Time: 48449 ms Error:0.0012878 Diff: -0.0015011
+Epoch #3 Run Time: 47766 ms Error:0.0010586 Diff: -0.0002292
+Epoch #4 Run Time: 48027 ms Error:0.0009921 Diff: -0.0000665
+Epoch #5 Run Time: 49547 ms Error:0.0009344 Diff: -0.0000577
+Epoch #6 Run Time: 60741 ms Error:0.0008927 Diff: -0.0000416
+Epoch #7 Run Time: 54699 ms Error:0.0008564 Diff: -0.0000364
+Epoch #8 Run Time: 56098 ms Error:0.0008365 Diff: -0.0000199
+Epoch #9 Run Time: 52175 ms Error:0.0008186 Diff: -0.0000179
+INFO: Training Complete.
+Total Train Time: 466618 ms
+Network saved as test.nn
+INFO: Correct Predictions: 8801.0 -- Total Predictions: 9218.0
+Total Test time: 7612
+INFO: Testing Complete. Accuracy = 95.47624213495335
+INFO: Total Run Time: 474230 ms

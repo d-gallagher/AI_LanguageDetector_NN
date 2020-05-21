@@ -75,6 +75,6 @@ fabric.properties
 
 # ignore txt files
 *.txt
-
+!results.txt
 # ignore csv files
 *.csv
