@@ -385,3 +385,39 @@ INFO: Correct Predictions: 8801.0 -- Total Predictions: 9218.0
 Total Test time: 7612
 INFO: Testing Complete. Accuracy = 95.47624213495335
 INFO: Total Run Time: 474230 ms
+
+Training Dataset. - dropout based on nodes in hidden layer
+Epoch #1 Run Time: 24491 ms Error:0.0035231 Diff: 0.0035231
+Epoch #2 Run Time: 22377 ms Error:0.0016861 Diff: -0.0018371
+Epoch #3 Run Time: 23430 ms Error:0.0013046 Diff: -0.0003814
+Epoch #4 Run Time: 21168 ms Error:0.0012306 Diff: -0.000074
+Epoch #5 Run Time: 20099 ms Error:0.0011782 Diff: -0.0000524
+Epoch #6 Run Time: 21159 ms Error:0.0011377 Diff: -0.0000404
+Epoch #7 Run Time: 20749 ms Error:0.0011033 Diff: -0.0000344
+Epoch #8 Run Time: 20965 ms Error:0.001072 Diff: -0.0000313
+Epoch #9 Run Time: 21222 ms Error:0.0010489 Diff: -0.0000231
+INFO: Training Complete.
+Total Train Time: 195660 ms
+Network saved as test.nn
+INFO: Correct Predictions: 10519.0 -- Total Predictions: 11739.0
+Total Test time: 4207
+INFO: Testing Complete. Accuracy = 89.60729193287332
+INFO: Total Run Time: 199867 ms
+
+Training Dataset. - no dropout
+Epoch #1 Run Time: 21915 ms Error:0.0034401 Diff: 0.0034401
+Epoch #2 Run Time: 20335 ms Error:0.0017552 Diff: -0.0016849
+Epoch #3 Run Time: 21524 ms Error:0.0013319 Diff: -0.0004233
+Epoch #4 Run Time: 20786 ms Error:0.0012532 Diff: -0.0000787
+Epoch #5 Run Time: 22786 ms Error:0.0011959 Diff: -0.0000573
+Epoch #6 Run Time: 25342 ms Error:0.001153 Diff: -0.0000429
+Epoch #7 Run Time: 21450 ms Error:0.001118 Diff: -0.000035
+Epoch #8 Run Time: 21322 ms Error:0.0010914 Diff: -0.0000266
+Epoch #9 Run Time: 20897 ms Error:0.0010727 Diff: -0.0000186
+INFO: Training Complete.
+Total Train Time: 196357 ms
+Network saved as test.nn
+INFO: Correct Predictions: 10564.0 -- Total Predictions: 11739.0
+Total Test time: 4335
+INFO: Testing Complete. Accuracy = 89.99062952551324
+INFO: Total Run Time: 200692 ms

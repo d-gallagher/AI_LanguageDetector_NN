@@ -189,20 +189,6 @@ public class VectorProcessor extends Component {
     }
 
 
-    public static void main(String[] args) throws IOException {
-//        int arraysize = 50;
-//        for (int i = 0; i < 10; i++) {
-//        File userFile = new File("engTest.txt");
-//        VectorProcessor vp = new VectorProcessor(3, 200, userFile);
-//        vp.go();
-//        double [] livedata = vp.getLiveData();
-//        vp.printDArray(livedata);
-//        System.out.println(livedata.length);
-//        Files.createDirectory(Paths.get("7gram"));
-//            arraysize += 50;
-//        System.out.println(vp.wili_file.getName());
-//        }
-    }
 
 
 }

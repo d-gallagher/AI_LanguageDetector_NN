@@ -63,12 +63,12 @@ public class NN {
         // Geometric Pyramid Rule to calculate hidden layer nodes
         double hiddenGPR = Math.sqrt(vectorSize * LANGUAGES);
         // recommended dropout rate of 0.8 https://machinelearningmastery.com/dropout-for-regularizing-deep-neural-networks/
-        int dropoutRate = (int) (vectorSize*0.8);
+        int dropoutRate = (int) (hiddenGPR*0.8);
 
         // === BUILD NETWORK ===
         BasicNetwork network = new BasicNetwork();
         network.addLayer(new BasicLayer(null, true, vectorSize));
-        network.addLayer(new BasicLayer(activationFunction, true, (int) hiddenGPR, dropoutRate));
+        network.addLayer(new BasicLayer(activationFunction, true, (int) hiddenGPR));
         network.addLayer(new BasicLayer(new ActivationSoftMax(), false, LANGUAGES));
         network.getStructure().finalizeStructure();
         network.reset();
@@ -244,13 +244,13 @@ public class NN {
 //        TimeUnit.SECONDS.sleep(2);
 //        NN nn = new NN();
 //        ActivationFunction activationFunction = new ActivationElliottSymmetric();
-//        nn.trainNewNetwork(activationFunction, 1000, "data1000.csv");
-////        nn.trainNewNetwork(activationFunction, 500, "data500.csv");
-////        for (double [] d: liveTestDataDir) {
-////            nn.testExistingNetwork("test.nn", d);
-////        }
-//
-//        // Shut down the Neural Network
+//        nn.trainNewNetwork(activationFunction, 500, "data500.csv");
+//////        nn.trainNewNetwork(activationFunction, 500, "data500.csv");
+//////        for (double [] d: liveTestDataDir) {
+//////            nn.testExistingNetwork("test.nn", d);
+//////        }
+////
+////        // Shut down the Neural Network
 //        Encog.getInstance().shutdown();
     }
 }

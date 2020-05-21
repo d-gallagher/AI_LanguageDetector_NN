@@ -327,13 +327,4 @@ public class Menu extends Component {
                 +"\nActivation Function: "+activationFunction.getLabel().toUpperCase());
     }
 
-
-//    public static void main(String[] args) throws InterruptedException {
-//        Menu m = new Menu();
-//
-//        NN defaultNetwork = new NN();
-//        defaultNetwork.trainNewNetwork(m.activationFunction, m.vector, m.filepath);
-//        Encog.getInstance().shutdown();
-//
-//    }
 }
