@@ -37,6 +37,7 @@ public class NN {
     // An output exists for each language in the Language set
     final int LANGUAGES = 235;
     private final Language[] langs = Language.values(); //Only call this once...
+    private int epochs;
 
 
     // Variables to calculate time elapsed and error difference
@@ -49,7 +50,8 @@ public class NN {
     private double currErVal;
 
 
-    public NN(){
+    public NN(int epochs){
+        this.epochs = epochs;
     }
 
     /**
@@ -123,7 +125,7 @@ public class NN {
             System.out.println("Epoch #" + epoch + " Run Time: " + period + " ms"
                     +" Error:" + df.format(crossValidationKFold.getError())+" Diff: "+df.format(diff));
             epoch++;
-        } while(crossValidationKFold.getError() > 0.0001 && epoch < 10);
+        } while(crossValidationKFold.getError() > 0.0001 && epoch < epochs+1);
         System.out.println("INFO: Training Complete.\nTotal Train Time: " + totalTime + " ms");
 
         // =============== Save the NN ========================

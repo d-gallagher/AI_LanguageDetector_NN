@@ -17,6 +17,7 @@ public class Menu extends Component {
     private ActivationFunction activationFunction = new ActivationElliottSymmetric();
     private int ngram = 2;
     private int vector = 500;
+    private int epochs = 9;
     private Map<String, double[]> liveTestDataDir = new HashMap<>();
     private double [] liveTestDatafile;
     private String filepath = "./data" + vector + ".csv";
@@ -36,6 +37,7 @@ public class Menu extends Component {
                         getUserInputNgram();        // reset default ngram size
                         getUserInputVector();       // reset default vector size
                         getUserInputActFunction();  // reset default activation function
+                        getUserInputEpoch();        // reset default epochs
                         printNetworkPreferences();
                         do{
                             System.out.println("Return to main Menu..? -> y/n");
@@ -52,7 +54,7 @@ public class Menu extends Component {
                         printNetworkPreferences();
                         String csvFile = "data"+vector+".csv";
                         System.out.println("Using csv: "+csvFile);
-                        NN defaultNetwork = new NN();
+                        NN defaultNetwork = new NN(epochs);
                         defaultNetwork.trainNewNetwork(activationFunction, vector, csvFile);
                         Encog.getInstance().shutdown();
                         do{
@@ -69,11 +71,12 @@ public class Menu extends Component {
                         if (in.equalsIgnoreCase("y")) {
                             getUserInputNgram();
                             getUserInputVector();
+                            getUserInputEpoch();
                             String testFile = getUserinputFile();
                             VectorProcessor userVP = new VectorProcessor(ngram, vector, testFile);
                             userVP.go();
                             liveTestDatafile = userVP.getLiveData();
-                            NN userSingleTest = new NN();
+                            NN userSingleTest = new NN(epochs);
                             userSingleTest.testExistingNetwork("test.nn", liveTestDatafile, testFile);
                             Encog.getInstance().shutdown();
                         }
@@ -91,6 +94,7 @@ public class Menu extends Component {
                         if (in.equalsIgnoreCase("y")){
                             getUserInputNgram();
                             getUserInputVector();
+                            getUserInputEpoch();
                             String directoryPath = getUserinputFile();
                             File [] testDirectory = new File(directoryPath).listFiles();
                             for (File file : testDirectory) {
@@ -100,7 +104,7 @@ public class Menu extends Component {
                                 liveTestDataDir.put(file.getName(), dd);
                             }
 
-                            NN nn = new NN();
+                            NN nn = new NN(epochs);
                             // using for-each loop for iteration over Map.entrySet()
                             for (Map.Entry<String,double[]> e : liveTestDataDir.entrySet()){
                                 nn.testExistingNetwork("test.nn",e.getValue(), e.getKey());
@@ -245,6 +249,16 @@ public class Menu extends Component {
         }
         return  selectedFile;
     }
+    private void getUserInputEpoch(){
+        //user enter vectorsize
+        String in;
+        do {
+            System.out.println("Specify epochs size - Recommended size is 9.");
+            in = s.next();
+        }while(in.isEmpty() || !in.matches("[1-9]"));
+        this.epochs = Integer.parseInt(in);
+        System.out.println("epochs: \n"+epochs);
+    }
     /**
      * Print Topology Information.
      */
@@ -324,7 +338,7 @@ public class Menu extends Component {
 
     private void printNetworkPreferences(){
         System.out.println("Preferences Set:\nNgram: " + ngram +"\nVector: " +vector
-                +"\nActivation Function: "+activationFunction.getLabel().toUpperCase());
+                +"\nEpocs: "+epochs+"\nActivation Function: "+activationFunction.getLabel().toUpperCase());
     }
 
 }
